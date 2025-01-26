@@ -1,0 +1,4 @@
+WARNING:discord.client:PyNaCl is not installed, voice will NOT be supported
+INFO:discord.client:logging in using static token
+INFO:discord.gateway:Shard ID None has connected to Gateway (Session ID: 31fb56edd4be6c7e2ea7cb6870410d9e).
+INFO:root:Read 20 properties from CSV.
