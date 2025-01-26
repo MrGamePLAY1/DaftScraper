@@ -31,17 +31,31 @@ def read_properties_from_csv():
         # Read the CSV file
         df = pd.read_csv("all_properties.csv")
         
-        # Convert the DataFrame to a list of dictionaries
-        properties = df.to_dict("records")
+        # Filter properties that haven't been processed
+        new_properties = df[df["processed"] == False].to_dict("records")
         
-        # Log the number of properties read
-        logging.info(f"Read {len(properties)} properties from CSV.")
+        # Log the number of new properties
+        logging.info(f"Found {len(new_properties)} new properties in CSV.")
         
-        return properties
+        return new_properties
     except Exception as e:
         logging.error(f"Error reading CSV file: {e}")
         return []
 
+# Mark a property as processed
+def mark_property_as_processed(address):
+    try:
+        # Read the CSV file
+        df = pd.read_csv("all_properties.csv")
+        
+        # Mark the property as processed
+        df.loc[df["address"] == address, "processed"] = True
+        
+        # Save the updated CSV
+        df.to_csv("all_properties.csv", index=False)
+        logging.info(f"Marked property '{address}' as processed.")
+    except Exception as e:
+        logging.error(f"Error updating CSV file: {e}")
 
 @bot.event
 async def on_ready():
@@ -56,12 +70,11 @@ async def clear(ctx, amount=100):
     if str(ctx.message.author.id) == owner_id:
         await ctx.message.channel.purge(limit=amount)
 
-
 @tasks.loop(minutes=30)  # Check every 30 minutes
 async def check_properties():
     channel = bot.get_channel(int(CHANNEL_ID))
     
-    # Read properties from the CSV file
+    # Read new properties from the CSV file
     properties = read_properties_from_csv()
     
     # Create embed for each property
@@ -81,6 +94,9 @@ async def check_properties():
             embed.set_image(url=property["image_url"])
         
         await channel.send(embed=embed)
+        
+        # Mark the property as processed
+        mark_property_as_processed(property["address"])
 
 @bot.command()
 async def properties(ctx):

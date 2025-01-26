@@ -17,6 +17,7 @@ class Property:
     price: str
     image_url: str  # Add image URL field
     details: List[str]  # Store all <span> texts as a list
+    processed: bool = False  # Add a processed flag
     
 
 
@@ -101,7 +102,8 @@ def scrape_properties():
             address=address,
             price=price,
             details=details,
-            image_url=image_url
+            image_url=image_url,
+            processed=False
         )
 
         # Add the property to the list
