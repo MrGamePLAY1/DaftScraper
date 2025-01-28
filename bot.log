@@ -1,4 +1,24 @@
 WARNING:discord.client:PyNaCl is not installed, voice will NOT be supported
 INFO:discord.client:logging in using static token
-INFO:discord.gateway:Shard ID None has connected to Gateway (Session ID: 2157474a388a37545e3ae9898e17da32).
-INFO:root:Found 0 new properties in CSV.
+INFO:discord.gateway:Shard ID None has connected to Gateway (Session ID: 505fd89bc0aafe3b4a0232b0afb13fcc).
+INFO:root:Found 20 new properties in CSV.
+INFO:root:Marked property 'Sites At Man O War, Malheney, Skerries, Co. Dublin' as processed.
+INFO:root:Marked property 'C. 0.5 Acre Site, Schoolhouse Lane, Corduff, Lusk, Co. Dublin' as processed.
+INFO:root:Marked property '77 The Crescent Building, Park West, Dublin 12' as processed.
+INFO:root:Marked property 'Site For Sale 24A, Site For Sale 24A, Glasmeen Road, Glasnevin, Dublin 11, D11T9E5' as processed.
+INFO:root:Marked property '15 Marlfield Close, Dublin 24, Kiltipper, Dublin 24, D24HY60' as processed.
+INFO:root:Marked property 'Apartment 125a , De Selby Park, Citywest, Co. Dublin, D24HR20' as processed.
+INFO:root:Marked property 'Apartment 61 , Ard Cluain, Main Street, Clonee, Co. Meath, D15WPF8' as processed.
+INFO:root:Marked property '47 Park Ridge, Grangerath, Drogheda, Co. Meath, A92NW08' as processed.
+INFO:root:Marked property '31 Ard na Greine, Kells, Co. Meath, A82W9T0' as processed.
+INFO:root:Marked property '83 Rivermill View, Navan, Co. Meath, C15V599' as processed.
+INFO:root:Marked property 'Apartment 44, Block D2, Geraldstown Woods, Santry, Dublin 9, D09R9FE' as processed.
+INFO:root:Marked property '44 Millbrook, Johnstown, Co. Meath, C15DX40' as processed.
+INFO:root:Marked property 'Apartment 58 , Block C, Westend Gate, Tallaght, Dublin 24, D24YA78' as processed.
+INFO:root:Marked property '21 Saint Canices Court, Cappagh Green, Finglas, Dublin 11, D11C640' as processed.
+INFO:root:Marked property 'Apartment 14 , Rath Geal, Clondalkin, Dublin 22, D22HA17' as processed.
+INFO:root:Marked property 'Apartment 11 , Landys Court, Mill Street, Balbriggan, Co. Dublin, K32V189' as processed.
+INFO:root:Marked property '8 Mayeston Court, Finglas, Dublin 11, D11V972' as processed.
+INFO:root:Marked property 'Apartment 16, 122 Capel Street, Dublin 1, D01C995' as processed.
+INFO:root:Marked property 'Feagh, Moynalty, Co. Meath, A82YN53' as processed.
+INFO:root:Marked property '82 The Crescent Building, D12PD34, Park West, Dublin 12' as processed.

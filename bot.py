@@ -5,6 +5,7 @@ import datetime
 import pandas as pd
 from dotenv import load_dotenv
 import os
+import ast
 
 # Load environment variables
 load_dotenv()
@@ -22,22 +23,38 @@ intents.members = True
 # Command Prefix
 bot = commands.Bot(command_prefix='!', intents=intents)
 
+MY_ID = 297460255724535808
+
+# Fetch your user object when the bot starts
+my_user = None
+
+@bot.event
+async def on_ready():
+    global my_user
+    my_user = await bot.fetch_user(MY_ID)
+    print(f'{bot.user} has connected to Discord!')
+    check_properties.start()
+
 # Channel ID where bot will send messages
-CHANNEL_ID = "1333186572178292737"  # Replace with your channel ID
+CHANNEL_ID = 1333186572178292737  # Replace with your channel ID
 
 # Read the CSV file
 def read_properties_from_csv():
     try:
-        # Read the CSV file
         df = pd.read_csv("all_properties.csv")
         
-        # Filter properties that haven't been processed
+        # Ensure required columns exist
+        required_columns = ["address", "price", "details", "image_url", "processed"]
+        if not all(column in df.columns for column in required_columns):
+            logging.error("CSV file is missing required columns.")
+            return []
+        
         new_properties = df[df["processed"] == False].to_dict("records")
-        
-        # Log the number of new properties
         logging.info(f"Found {len(new_properties)} new properties in CSV.")
-        
         return new_properties
+    except FileNotFoundError:
+        logging.error("CSV file not found.")
+        return []
     except Exception as e:
         logging.error(f"Error reading CSV file: {e}")
         return []
@@ -45,64 +62,45 @@ def read_properties_from_csv():
 # Mark a property as processed
 def mark_property_as_processed(address):
     try:
-        # Read the CSV file
         df = pd.read_csv("all_properties.csv")
-        
-        # Mark the property as processed
         df.loc[df["address"] == address, "processed"] = True
-        
-        # Save the updated CSV
         df.to_csv("all_properties.csv", index=False)
         logging.info(f"Marked property '{address}' as processed.")
     except Exception as e:
         logging.error(f"Error updating CSV file: {e}")
 
-@bot.event
-async def on_ready():
-    print(f'{bot.user} has connected to Discord!')
-    check_properties.start()
+async def send_property_embeds():
+    channel = bot.get_channel(CHANNEL_ID)
+    if channel is None:
+        logging.error(f"Channel with ID {CHANNEL_ID} not found.")
+        return
     
-@bot.command()
-async def clear(ctx, amount=100):
-    owner_id = '297460255724535808'  # Replace 'your_owner_id' with the actual owner's user ID
-    logging.info(f"Command executed: !clear {amount} by {ctx.author} in {ctx.channel}")
-    
-    if str(ctx.message.author.id) == owner_id:
-        await ctx.message.channel.purge(limit=amount)
-
-@tasks.loop(minutes=30)  # Check every 30 minutes
-async def check_properties():
-    channel = bot.get_channel(int(CHANNEL_ID))
-    
-    # Read new properties from the CSV file
     properties = read_properties_from_csv()
-    
-    # Create embed for each property
     for property in properties:
         embed = discord.Embed(
             title="New Property Listed!",
-            description=property["address"],
+            description=f"Hey {my_user.mention}, a new property has been listed!\n\n**Address:** {property['address']}",
             color=discord.Color.green(),
-            timestamp=datetime.datetime.now()  # Use datetime.datetime.now()
+            timestamp=datetime.datetime.now()
         )
-        
         embed.add_field(name="Price", value=property["price"], inline=True)
-        embed.add_field(name="Details", value=", ".join(eval(property["details"])), inline=True)
+        embed.add_field(name="Details", value=", ".join(ast.literal_eval(property["details"])), inline=True)
         
-        # Add the image URL to the embed
         if property["image_url"] and property["image_url"] != "N/A":
             embed.set_image(url=property["image_url"])
         
         await channel.send(embed=embed)
-        
-        # Mark the property as processed
         mark_property_as_processed(property["address"])
+
+@tasks.loop(minutes=30)
+async def check_properties():
+    await send_property_embeds()
 
 @bot.command()
 async def properties(ctx):
     """Command to manually check properties"""
     await ctx.send("Checking for new properties...")
-    await check_properties()
+    await send_property_embeds()
 
 # Run the bot
-bot.run(discord_token)  # Use the correct variable name
+bot.run(discord_token)
