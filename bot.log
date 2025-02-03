@@ -1,24 +1,145 @@
 WARNING:discord.client:PyNaCl is not installed, voice will NOT be supported
 INFO:discord.client:logging in using static token
-INFO:discord.gateway:Shard ID None has connected to Gateway (Session ID: 505fd89bc0aafe3b4a0232b0afb13fcc).
-INFO:root:Found 20 new properties in CSV.
-INFO:root:Marked property 'Sites At Man O War, Malheney, Skerries, Co. Dublin' as processed.
-INFO:root:Marked property 'C. 0.5 Acre Site, Schoolhouse Lane, Corduff, Lusk, Co. Dublin' as processed.
-INFO:root:Marked property '77 The Crescent Building, Park West, Dublin 12' as processed.
-INFO:root:Marked property 'Site For Sale 24A, Site For Sale 24A, Glasmeen Road, Glasnevin, Dublin 11, D11T9E5' as processed.
-INFO:root:Marked property '15 Marlfield Close, Dublin 24, Kiltipper, Dublin 24, D24HY60' as processed.
-INFO:root:Marked property 'Apartment 125a , De Selby Park, Citywest, Co. Dublin, D24HR20' as processed.
-INFO:root:Marked property 'Apartment 61 , Ard Cluain, Main Street, Clonee, Co. Meath, D15WPF8' as processed.
-INFO:root:Marked property '47 Park Ridge, Grangerath, Drogheda, Co. Meath, A92NW08' as processed.
-INFO:root:Marked property '31 Ard na Greine, Kells, Co. Meath, A82W9T0' as processed.
-INFO:root:Marked property '83 Rivermill View, Navan, Co. Meath, C15V599' as processed.
-INFO:root:Marked property 'Apartment 44, Block D2, Geraldstown Woods, Santry, Dublin 9, D09R9FE' as processed.
-INFO:root:Marked property '44 Millbrook, Johnstown, Co. Meath, C15DX40' as processed.
-INFO:root:Marked property 'Apartment 58 , Block C, Westend Gate, Tallaght, Dublin 24, D24YA78' as processed.
-INFO:root:Marked property '21 Saint Canices Court, Cappagh Green, Finglas, Dublin 11, D11C640' as processed.
-INFO:root:Marked property 'Apartment 14 , Rath Geal, Clondalkin, Dublin 22, D22HA17' as processed.
-INFO:root:Marked property 'Apartment 11 , Landys Court, Mill Street, Balbriggan, Co. Dublin, K32V189' as processed.
-INFO:root:Marked property '8 Mayeston Court, Finglas, Dublin 11, D11V972' as processed.
-INFO:root:Marked property 'Apartment 16, 122 Capel Street, Dublin 1, D01C995' as processed.
-INFO:root:Marked property 'Feagh, Moynalty, Co. Meath, A82YN53' as processed.
-INFO:root:Marked property '82 The Crescent Building, D12PD34, Park West, Dublin 12' as processed.
+INFO:discord.gateway:Shard ID None has connected to Gateway (Session ID: 62c9babf8f84366c746791c529a0987d).
+INFO:root:Cleared 3 messages in homes by mr_gameplay
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: Sites At Man O War, Malheney, Skerries, Co. Dublin
+INFO:__main__:Price: €160,000
+INFO:__main__:Features: ['0.5 acSite']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6IjAvOC8wOGExM2EwZjE0YjA0ODlkNmU0YWQ2Mzc4ZGFmOTI1NS5qcGcifQ==?signature=2d6761f512ec224147dc47649d9703268a7f6ab72c84993332e2a4cfd4e5a627
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: C. 0.5 Acre Site, Schoolhouse Lane, Corduff, Lusk, Co. Dublin
+INFO:__main__:Price: €150,000
+INFO:__main__:Features: ['0.5 acSite']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6IjAvNC8wNGI2OWEzNWZhMDhkNTA3ZTk5YTkzNDg4OGUxNTcyZS5qcGcifQ==?signature=ae803d363be92510f2a5ed546f0be633c67686cb92d0390c5f306ee15fcfbd84
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: 77 The Crescent Building, Park West, Dublin 12
+INFO:__main__:Price: €195,000
+INFO:__main__:Features: ['1 Bed1 Bath51 m²Apartment']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6ImIvYy9iYzkzOGI2NDdmOTQzZWI2YmE3NmYwNzBkZGM4OTI1MC5qcGcifQ==?signature=09fbfa6574e4e949c7bfa96b359616f34b19fb25cccd2337f87f3aab2bcb8146
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: 56 Holywell Wood, Swords, Co. Dublin, K67X673
+INFO:__main__:Price: €195,000
+INFO:__main__:Features: ['1 Bed1 Bath43 m²Terrace']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6IjEvMi8xMmRjNzJlNjgxNWNlMDAwZDU4NjdiMjAyMDZkYzk4OC5qcGcifQ==?signature=445f44ba76aafe392fa9a5336d273f055febb308f6a38ae95f3becc3f1097a7f
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: 4 Sites Along, Kilhedge Lane, Corduff, Lusk, Co. Dublin
+INFO:__main__:Price: €160,000
+INFO:__main__:Features: ['0.74 acSite']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6ImEvYi9hYjYyYjNkMjk3NmY5MDQ0ODRlZWNjMTg2OTQ4MmRiMS5wbmcifQ==?signature=2176096102a4ea00b45534477c651bf6e6f1ed955a94ec4883a91d939d5bb921
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: Site For Sale 24A, Site For Sale 24A, Glasmeen Road, Glasnevin, Dublin 11, D11T9E5
+INFO:__main__:Price: €200,000
+INFO:__main__:Features: ['114 m²Detached']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6ImIvYS9iYWVhMjliZDUwYWRjYjRiM2Q4OGM1ZTEzOGVkN2QzOC5qcGcifQ==?signature=b99936c2ec925556c98b2d59e11c22f8a6e49dd99c1acdd0491c782a192a0fc0
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: 15 Marlfield Close, Dublin 24, Kiltipper, Dublin 24, D24HY60
+INFO:__main__:Price: €190,000
+INFO:__main__:Features: ['1 Bed1 BathApartment']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6IjQvYi80YjhiZDk4Zi0wZjBlLTRmNzItYmY1MS0xYTRjNGVmZjE0OTcuSlBFRyJ9?signature=f725f75e9afac6d0170db012e767993f3be6b8bc640a2c2504d268d7c2cbc5ee
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: Apartment 125a , De Selby Park, Citywest, Co. Dublin, D24HR20
+INFO:__main__:Price: €199,950
+INFO:__main__:Features: ['2 Bed1 Bath46 m²Apartment']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6ImIvMi9iMjA5YTlkNi03Njk3LTQ3NTAtYWNmOS0zMmZjZmE5M2ZmNGMuSlBFRyJ9?signature=171187634bbb43b656b1eaefa26ed495437f6a789a3baf846601f38a8941f068
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: 47 Park Ridge, Grangerath, Drogheda, Co. Meath, A92NW08
+INFO:__main__:Price: €195,000
+INFO:__main__:Features: ['1 Bed1 Bath50 m²Apartment']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6ImQvYi9kYjJiYTczOC0zYjBkLTRhZTktOGJmMS1kODQwZWZjYjM2NjUuSlBFRyJ9?signature=938377772875a4d5abd494b83cf6f5c863c490f1ed87aa202c2d853277016fe6
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: 31 Ard na Greine, Kells, Co. Meath, A82W9T0
+INFO:__main__:Price: AMV: €185,000
+INFO:__main__:Features: ['3 Bed1 BathSemi-D']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6ImEvNS9hNWFhYjk0NTdmM2RiZjFlOGVmY2U1ZjUzYzk3YzQzNy5qcGcifQ==?signature=c5dcfbb605d224aa23768c0681508f5c8c0e69fabc176b2026e470b4a21e9266
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: 83 Rivermill View, Navan, Co. Meath, C15V599
+INFO:__main__:Price: €170,000
+INFO:__main__:Features: ['2 Bed1 Bath65 m²Apartment']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6ImQvZS9kZTliMzk3OTQ2YTNhNTcyZTFkODIzOTI3ZDQ2ZWVkMC5qcGcifQ==?signature=141a52e019076aeb13e5a9158c7a64921d0f4b59924cba9b35b605f0d35499d1
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: Apartment 44, Block D2, Geraldstown Woods, Santry, Dublin 9, D09R9FE
+INFO:__main__:Price: €200,000
+INFO:__main__:Features: ['1 Bed1 Bath44 m²Apartment']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6IjAvMS8wMWYyOTk4MmU3ODJlNjg0OGM3YWYzY2VlZTUzMDNhZi5qcGcifQ==?signature=cc196d5d4420aa5cfae3a1e780329b59e19820416e59dfd00af8d26e4e0d2eea
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: 44 Millbrook, Johnstown, Co. Meath, C15DX40
+INFO:__main__:Price: €190,000
+INFO:__main__:Features: ['2 Bed1 Bath54 m²Apartment']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6IjEvYy8xYzUwOGM5Yi1jMmRlLTQ3ODEtYTI1Ny05YjViYThhM2I1NGMuSlBFRyJ9?signature=8472606debf75cc14d5c33c01a229433372f143c9b177fa553f21f8fa2a31fe5
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: 21 Saint Canices Court, Cappagh Green, Finglas, Dublin 11, D11C640
+INFO:__main__:Price: €190,000
+INFO:__main__:Features: ['1 Bed1 Bath58 m²Apartment']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6IjkvNy85N2YyY2FlMjA4Yzc3MmYwNGY1NWM4NjNiM2UyM2M5YS5qcGcifQ==?signature=32254e0e7850b14d01152a00230713e53b9f027199f8cef437ec783cc2b2f22c
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: Apartment 14 , Rath Geal, Clondalkin, Dublin 22, D22HA17
+INFO:__main__:Price: €200,000
+INFO:__main__:Features: ['1 Bed1 Bath44 m²Apartment']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6ImQvMS9kMWUwNjVmNy05NTcwLTQ4NzYtYWJiZS1kYjZhZTMxNmY2YTkuSlBFRyJ9?signature=b3ad4210e53ff8258bbfeb4061979fb7c32035bf6faa72c99cebd19b6329b2a3
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: Apartment 16, 122 Capel Street, Dublin 1, D01C995
+INFO:__main__:Price: AMV: €180,000
+INFO:__main__:Features: ['1 Bed1 BathApartment']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6IjEvOC8xOGQwOTBmYjkzYzM5M2Y0N2NhZWM3MTZlMDgxNzA3NS5qcGcifQ==?signature=9aca11892342a86b5aa01f5fc1ba34fe4022cd3909a802b6f6f3fe63a0809a34
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: Feagh, Moynalty, Co. Meath, A82YN53
+INFO:__main__:Price: €170,000
+INFO:__main__:Features: ['2 Bed1 BathDetached']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6IjUvMi81MmMzOGI4MC0zODdkLTQyMGMtOGY2Yi05YjUxZjg1OTI0YzYuanBnIn0=?signature=1e36cdc123cc487fb8fe30a04c37721f673b229563c0fb26c1720a0cf5aa43bb
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: 82 The Crescent Building, D12PD34, Park West, Dublin 12
+INFO:__main__:Price: €195,000
+INFO:__main__:Features: ['1 Bed1 Bath52 m²Apartment']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6ImIvYy9iYzkzOGI2NDdmOTQzZWI2YmE3NmYwNzBkZGM4OTI1MC5qcGcifQ==?signature=09fbfa6574e4e949c7bfa96b359616f34b19fb25cccd2337f87f3aab2bcb8146
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: 1 Applewood Court, Swords, Co. Dublin
+INFO:__main__:Price: €195,000
+INFO:__main__:Features: ['1 Bed1 Bath51 m²Apartment']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6IjAvNy8wNzI4MjIzZDg4YmUzZTVkODU3YzM4Zjk3YjVjM2I5OC5qcGcifQ==?signature=6b8eed575ab5ef9841da270fc1ec21610924e9a50f81bdf0c9223305e5724221
+INFO:__main__:===========================
+INFO:__main__:
+=== New Property Found ===
+INFO:__main__:Address: 22a Woodbank Drive, Finglas, Dublin 11
+INFO:__main__:Price: €195,000
+INFO:__main__:Features: ['2 Bed2 Bath90 m²End of Terrace']
+INFO:__main__:ImageURL: https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsicmVzaXplIjp7ImZpdCI6ImNvdmVyIiwid2lkdGgiOjcyMCwiaGVpZ2h0Ijo0ODB9fSwib3V0cHV0Rm9ybWF0IjoianBlZyIsImtleSI6ImUvNy9lNzMzZDg5OWFmYTgyYWI4ODE3ODQ0NDZkNjM0MTBkZi5qcGcifQ==?signature=ed92a58498ed34e54c53c86e56cd5fcf6935087b236ff2c52b0720b7dffda9ef
+INFO:__main__:===========================
+INFO:__main__:Webhook message sent successfully!

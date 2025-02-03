@@ -1,14 +1,31 @@
 import requests
-import pandas as pd
+import os
+from datetime import datetime
+from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 import random
 import logging
 import time
+import requests
 from dataclasses import dataclass
 from typing import List
 
-# Add logging
-logging.basicConfig(level=logging.INFO)
+load_dotenv()
+
+web = os.getenv('WEBHOOK_URL')
+if not web:
+    raise ValueError("WEBHOOK_URL environment variable is not set.")
+
+# Update logging configuration
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('scraper.log'),
+        logging.StreamHandler()  # This ensures output goes to console
+    ]
+)
+
 logger = logging.getLogger(__name__)
 
 @dataclass
@@ -18,8 +35,9 @@ class Property:
     image_url: str  # Add image URL field
     details: List[str]  # Store all <span> texts as a list
     processed: bool = False  # Add a processed flag
-    
 
+# NEW SET OF PROPERTIES
+known_properties = []
 
 def scrape_properties():
     # Base URL for pagination
@@ -50,93 +68,121 @@ def scrape_properties():
     }
 
     # Send a GET request
-    response = requests.get(base_url, headers=headers)
-
-    # Manually set the encoding (if needed)
-    response.encoding = "utf-8"  # or "ISO-8859-1"
+    try:
+        response = requests.get(base_url, headers=headers)
+        response.raise_for_status()  # Raise an error for bad status codes
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Failed to retrieve data: {e}")
+        return []
 
     # Parse the HTML content
     soup = BeautifulSoup(response.content, "html.parser")
+    
 
-    # Verify response
-    logger.info(f"Response status: {response.status_code}")
+    # Find all property listings directly
+    listings = soup.find_all("li", {"data-testid": lambda x: x and "result" in str(x)})
 
-    # Find all titles, prices, and property-style containers
-    titles = soup.find_all("div", {"class": "sc-e4fdcbde-3 fkMRKT"})  # Update this selector
-    prices = soup.find_all("div", {"class": "sc-e4fdcbde-3 ifZXft"})  # Update this selector
-    property_styles = soup.find_all("div", {"class": "sc-5d364562-1 kzXTWf"})  # Update this selector
-    image_containers = soup.find_all("div", {"class": "sc-7cfc0726-0 kTpJhs"})  # Update this selector
+    # Check if no listing is found
+    if not listings:
+        logger.warning("No listings found on the page.")
+        return []
 
-    # Initialize a list to store grouped properties
-    properties = []
-
-    # Loop through the elements and group them
-    for title, price, style, image_container in zip(titles, prices, property_styles, image_containers):
+    new_properties = []
+    for listing in listings:
         try:
-            # Extract the text for each field
-            address = title.find("p").get_text(strip=True)
-        except AttributeError:
-            address = "N/A"
+            # Extract Address
+            address_div = listing.find("div", {"data-tracking": "srp_address"})
+            address = address_div.find("p").get_text(strip=True) if address_div else "N/A"
 
-        try:
-            price = price.find("p").get_text(strip=True)
-        except AttributeError:
-            price = "N/A"
+            # Extract Price
+            price_div = listing.find("div", {"data-tracking": "srp_price"})
+            price = price_div.find("p").get_text(strip=True) if price_div else "N/A"
             
-        try:
-            # Extract the image URL
-            img_tag = image_container.find("img")
-            image_url = img_tag.get("src") if img_tag else "N/A"
-        except AttributeError:
-            image_url = "N/A"
+            # Extract features
+            features = listing.find_all("div", {"data-tracking": "srp_meta"})
+            details = [feature.get_text(strip=True) for feature in features]
+            
+            # Extract image URL
+            img_div = listing.find_all("div", {"data-testid": "imageContainer"})
+            if img_div:
+                # Assuming there's one image per div, you can get the first image
+                img_tag = img_div[0].find("img")  # Get the first img tag
+                actual_img = img_tag["src"] if img_tag else "N/A"  # Extract the src attribute
+            else:
+                actual_img = "N/A"
+            
 
-        try:
-            # Find all <span> tags within the property-style container
-            spans = style.find_all("span")
-            details = [span.get_text(strip=True) for span in spans]
-        except AttributeError:
-            details = []
+            # Add to properties if new
+            if address != "N/A" and address not in known_properties:
+                new_properties.append(Property(address=address, price=price, image_url=actual_img, details=details))
+                known_properties.append(address)
 
-        # Create a Property object
-        property_data = Property(
-            address=address,
-            price=price,
-            details=details,
-            image_url=image_url,
-            processed=False
-        )
+                # Print property details
+                logger.info("\n=== New Property Found ===")
+                logger.info(f"Address: {address}")
+                logger.info(f"Price: {price}")
+                logger.info(f"Features: {details}")
+                logger.info(f"ImageURL: {actual_img}")
+                logger.info("===========================")
 
-        # Add the property to the list
-        properties.append(property_data)
+        except Exception as e:
+            logger.error(f"Error processing listing: {e}")
+            continue
 
-        # Log the property
-        logger.info(f"Adding property: {property_data}")
+    return new_properties
 
-    # Print all properties
+def send_webhook_message(web, properties):
+    """Send a message to Discord channel using webhook."""
+    embeds = []
+    
     for property in properties:
-        print(property)
+        embed = {
+            "title": property.address,
+            "description": f"**Price:** {property.price}",
+            "color": 0x00ff00,  # Green color
+            "image": {"url": property.image_url},  # Main image (larger size)
+            "fields": [
+                {"name": "Address", "value": property.address, "inline": True},
+                {"name": "Price", "value": property.price, "inline": True},
+                {"name": "URL", "value": f"[View Image]({property.image_url})", "inline": False}
+            ]
+        }
+        embeds.append(embed)
+    
+    # Split embeds into chunks of 10
+    for i in range(0, len(embeds), 10):
+        chunk = embeds[i:i + 10]  # Get up to 10 embeds
+        payload = {
+            "username": "Daft Bot",  # The username displayed in Discord
+            "embeds": chunk
+        }
+    # Send the message via POST request
+    response = requests.post(web, json=payload)
+    
+    try:
+        # Send the message via POST request
+        response = requests.post(web, json=payload)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        logger.info("Webhook message sent successfully!")
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Failed to send message: {e}")
+        logger.error(f"Response: {response.status_code} - {response.text}")
 
-    # Save the data to a CSV file
-    df = pd.DataFrame([prop.__dict__ for prop in properties])
-    df.to_csv("all_properties.csv", index=False)
-    logger.info("Data saved to 'all_properties.csv'.")
-
-    return properties
 
 
 def main():
     while True:
-        try:
-            # Run the scraper
-            properties = scrape_properties()
-            print(f"Scraped {len(properties)} properties.")
-            
-            # Wait for a specified interval (e.g., 30 minutes)
-            time.sleep(1800)  # 1800 seconds = 30 minutes
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            time.sleep(60)  # Wait 1 minute before retrying
+        # Scrape the properties
+        new_properties = scrape_properties()
+        if new_properties:
+            # Send a message to Discord
+            send_webhook_message(web, new_properties)
+        else:
+            logger.info("No new properties found.")
 
+        # Wait for 5 seconds to check again
+        time.sleep(5)
 
 if __name__ == "__main__":
     main()
+    
