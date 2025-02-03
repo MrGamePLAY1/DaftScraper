@@ -138,7 +138,7 @@ def scrape_properties():
 
             # Add to properties if new
             if address != "N/A" and address not in known_properties:
-                new_properties.append(Property(address=address, price=price, image_url=actual_img, details=details))
+                new_properties.append(Property(address=address, price=price, eircode=eircode, image_url=actual_img, details=details))
                 known_properties.append(address)
                 save_known_properties(known_properties)  # Save updated list to file
 
