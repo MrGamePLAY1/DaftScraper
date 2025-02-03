@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import random
 import logging
 import time
-import requests
+import json
 from dataclasses import dataclass
 from typing import List
 
@@ -36,12 +36,27 @@ class Property:
     details: List[str]  # Store all <span> texts as a list
     processed: bool = False  # Add a processed flag
 
-# NEW SET OF PROPERTIES
-known_properties = []
+# File to store known properties
+KNOWN_PROPERTIES_FILE = "known_properties.json"
+
+def load_known_properties():
+    """Load known properties from a file."""
+    if os.path.exists(KNOWN_PROPERTIES_FILE):
+        with open(KNOWN_PROPERTIES_FILE, "r") as file:
+            return json.load(file)
+    return []
+
+def save_known_properties(known_properties):
+    """Save known properties to a file."""
+    with open(KNOWN_PROPERTIES_FILE, "w") as file:
+        json.dump(known_properties, file)
+
+# Load known properties at startup
+known_properties = load_known_properties()
 
 def scrape_properties():
     # Base URL for pagination
-    base_url = "https://www.daft.ie/property-for-sale/ireland?terms=&adState=published&location=dublin&location=meath&salePrice_to=200000&salePrice_from=150000&pageSize=100&from=0"
+    base_url = "https://www.daft.ie/property-for-sale/ireland?terms=&adState=published&location=dublin&location=meath&salePrice_to=225000&salePrice_from=150000&pageSize=100"
 
     # User agents to rotate
     user_agents = [
@@ -77,7 +92,6 @@ def scrape_properties():
 
     # Parse the HTML content
     soup = BeautifulSoup(response.content, "html.parser")
-    
 
     # Find all property listings directly
     listings = soup.find_all("li", {"data-testid": lambda x: x and "result" in str(x)})
@@ -97,11 +111,11 @@ def scrape_properties():
             # Extract Price
             price_div = listing.find("div", {"data-tracking": "srp_price"})
             price = price_div.find("p").get_text(strip=True) if price_div else "N/A"
-            
+
             # Extract features
             features = listing.find_all("div", {"data-tracking": "srp_meta"})
             details = [feature.get_text(strip=True) for feature in features]
-            
+
             # Extract image URL
             img_div = listing.find_all("div", {"data-testid": "imageContainer"})
             if img_div:
@@ -110,12 +124,12 @@ def scrape_properties():
                 actual_img = img_tag["src"] if img_tag else "N/A"  # Extract the src attribute
             else:
                 actual_img = "N/A"
-            
 
             # Add to properties if new
             if address != "N/A" and address not in known_properties:
                 new_properties.append(Property(address=address, price=price, image_url=actual_img, details=details))
                 known_properties.append(address)
+                save_known_properties(known_properties)  # Save updated list to file
 
                 # Print property details
                 logger.info("\n=== New Property Found ===")
@@ -134,8 +148,10 @@ def scrape_properties():
 def send_webhook_message(web, properties):
     """Send a message to Discord channel using webhook."""
     embeds = []
-    
-    for property in properties:
+    # Remove duplicates from properties (if any)
+    unique_properties = list({prop.address: prop for prop in properties}.values())
+
+    for property in unique_properties:
         embed = {
             "title": property.address,
             "description": f"**Price:** {property.price}",
@@ -143,12 +159,11 @@ def send_webhook_message(web, properties):
             "image": {"url": property.image_url},  # Main image (larger size)
             "fields": [
                 {"name": "Address", "value": property.address, "inline": True},
-                {"name": "Price", "value": property.price, "inline": True},
-                {"name": "URL", "value": f"[View Image]({property.image_url})", "inline": False}
+                {"name": "Price", "value": property.price, "inline": True}
             ]
         }
         embeds.append(embed)
-    
+
     # Split embeds into chunks of 10
     for i in range(0, len(embeds), 10):
         chunk = embeds[i:i + 10]  # Get up to 10 embeds
@@ -156,19 +171,15 @@ def send_webhook_message(web, properties):
             "username": "Daft Bot",  # The username displayed in Discord
             "embeds": chunk
         }
-    # Send the message via POST request
-    response = requests.post(web, json=payload)
-    
-    try:
-        # Send the message via POST request
-        response = requests.post(web, json=payload)
-        response.raise_for_status()  # Raise an exception for HTTP errors
-        logger.info("Webhook message sent successfully!")
-    except requests.exceptions.RequestException as e:
-        logger.error(f"Failed to send message: {e}")
-        logger.error(f"Response: {response.status_code} - {response.text}")
 
-
+        try:
+            # Send the message via POST request
+            response = requests.post(web, json=payload)
+            response.raise_for_status()  # Raise an exception for HTTP errors
+            logger.info("Webhook message sent successfully!")
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Failed to send message: {e}")
+            logger.error(f"Response: {response.status_code} - {response.text}")
 
 def main():
     while True:
@@ -185,4 +196,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
