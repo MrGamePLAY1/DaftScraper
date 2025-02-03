@@ -1,4 +1,5 @@
 import requests
+import re 
 import os
 from datetime import datetime
 from dotenv import load_dotenv
@@ -34,6 +35,7 @@ class Property:
     price: str
     image_url: str  # Add image URL field
     details: List[str]  # Store all <span> texts as a list
+    eircode: str = None  # Add Eircode field
     processed: bool = False  # Add a processed flag
 
 # File to store known properties
@@ -107,6 +109,15 @@ def scrape_properties():
             # Extract Address
             address_div = listing.find("div", {"data-tracking": "srp_address"})
             address = address_div.find("p").get_text(strip=True) if address_div else "N/A"
+            
+            # Eircode
+            address_parts = address.split(", ")  # Split address by comma and space
+            eircode = address_parts[-1] if address_parts else None  # Get the last part
+            
+            # Skip properties with "Site" in the address
+            if "site" in address.lower():
+                logger.info(f"Skipping property with 'Site' in address: {address}")
+                continue
 
             # Extract Price
             price_div = listing.find("div", {"data-tracking": "srp_price"})
@@ -115,7 +126,7 @@ def scrape_properties():
             # Extract features
             features = listing.find_all("div", {"data-tracking": "srp_meta"})
             details = [feature.get_text(strip=True) for feature in features]
-
+        
             # Extract image URL
             img_div = listing.find_all("div", {"data-testid": "imageContainer"})
             if img_div:
@@ -135,6 +146,7 @@ def scrape_properties():
                 logger.info("\n=== New Property Found ===")
                 logger.info(f"Address: {address}")
                 logger.info(f"Price: {price}")
+                logger.info(f"Eircode: {eircode}")
                 logger.info(f"Features: {details}")
                 logger.info(f"ImageURL: {actual_img}")
                 logger.info("===========================")
@@ -159,7 +171,7 @@ def send_webhook_message(web, properties):
             "image": {"url": property.image_url},  # Main image (larger size)
             "fields": [
                 {"name": "Address", "value": property.address, "inline": True},
-                {"name": "Price", "value": property.price, "inline": True}
+                {"name": "eircode", "value": property.eircode, "inline": True}
             ]
         }
         embeds.append(embed)
