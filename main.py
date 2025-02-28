@@ -58,7 +58,7 @@ known_properties = load_known_properties()
 
 def scrape_properties():
     # Base URL for pagination
-    base_url = "https://www.daft.ie/property-for-sale/blanchardstown-dublin?terms=&adState=published&salePrice_to=215000&salePrice_from=150000&pageSize=100&radius=40000"
+    base_url = "https://www.daft.ie/property-for-sale/blanchardstown-dublin?terms=&adState=published&salePrice_to=215000salePrice_from=150000&pageSize=100&radius=40000"
 
     # User agents to rotate
     user_agents = [
