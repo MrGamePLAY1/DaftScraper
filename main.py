@@ -95,9 +95,11 @@ def scrape_properties():
 
     # Parse the HTML content
     soup = BeautifulSoup(response.content, "html.parser")
+    
 
     # Find all property listings directly
     listings = soup.find_all("li", {"data-testid": lambda x: x and "result" in str(x)})
+
 
     # Check if no listing is found
     if not listings:
@@ -107,6 +109,13 @@ def scrape_properties():
     new_properties = []
     for listing in listings:
         try:
+            # Hoping to find the link in the page
+            link_tag = listing.find("a", href=True)
+            link = link_tag['href'] if link_tag else "N/A" 
+            print(link)
+
+
+
             # Extract Address
             address_div = listing.find("div", {"data-tracking": "srp_address"})
             address = address_div.find("p").get_text(strip=True) if address_div else "N/A"
