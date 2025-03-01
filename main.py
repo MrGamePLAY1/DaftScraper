@@ -49,14 +49,23 @@ def load_known_properties():
             with open(KNOWN_PROPERTIES_FILE, "r") as file:
                 content = file.read().strip()
                 if content:
-                    return json.load(file)
+                    return json.loads(content)  # Use loads instead of load
                 else:
                     logger.info("The file is empty.")
                     return []
         else:
-            logger.info("File not found.")
-    except FileNotFoundError:
-        logger.error("Unexpected error whilst trying to load file.")
+            logger.info("File not found, creating new one.")
+            save_known_properties([])  # Create empty file
+            return []
+    except json.JSONDecodeError as e:
+        logger.error(f"Invalid JSON in properties file: {e}")
+        backup_file = f"{KNOWN_PROPERTIES_FILE}.bak"
+        logger.info(f"Backing up corrupted file to {backup_file}")
+        if os.path.exists(KNOWN_PROPERTIES_FILE):
+            os.rename(KNOWN_PROPERTIES_FILE, backup_file)
+        return []
+    except Exception as e:
+        logger.error(f"Unexpected error loading properties: {e}")
         return []
             
 
