@@ -36,6 +36,7 @@ class Property:
     image_url: str  # Add image URL field
     details: List[str]  # Store all <span> texts as a list
     eircode: str = None  # Add Eircode field
+    link: str = None  # Add a link field
     processed: bool = False  # Add a processed flag
 
 # File to store known properties
@@ -43,10 +44,21 @@ KNOWN_PROPERTIES_FILE = "known_properties.json"
 
 def load_known_properties():
     """Load known properties from a file."""
-    if os.path.exists(KNOWN_PROPERTIES_FILE):
-        with open(KNOWN_PROPERTIES_FILE, "r") as file:
-            return json.load(file)
-    return []
+    try:
+        if os.path.exists(KNOWN_PROPERTIES_FILE):
+            with open(KNOWN_PROPERTIES_FILE, "r") as file:
+                content = file.read().strip()
+                if content:
+                    return json.load(file)
+                else:
+                    logger.info("The file is empty.")
+                    return []
+        else:
+            logger.info("File not found.")
+    except FileNotFoundError:
+        logger.error("Unexpected error whilst trying to load file.")
+        return []
+            
 
 def save_known_properties(known_properties):
     """Save known properties to a file."""
@@ -111,8 +123,9 @@ def scrape_properties():
         try:
             # Hoping to find the link in the page
             link_tag = listing.find("a", href=True)
-            link = link_tag['href'] if link_tag else "N/A" 
-            print(link)
+            link = link_tag['href'] if link_tag else "N/A"
+            link = "https://www.daft.ie" + link 
+            # print(link)
 
 
 
@@ -148,13 +161,14 @@ def scrape_properties():
 
             # Add to properties if new
             if address != "N/A" and address not in known_properties:
-                new_properties.append(Property(address=address, price=price, eircode=eircode, image_url=actual_img, details=details))
+                new_properties.append(Property(address=address, price=price, link=link, eircode=eircode, image_url=actual_img, details=details))
                 known_properties.append(address)
                 save_known_properties(known_properties)  # Save updated list to file
 
                 # Print property details
                 logger.info("\n=== New Property Found ===")
                 logger.info(f"Address: {address}")
+                logger.info(f"Link: {link}")
                 logger.info(f"Price: {price}")
                 logger.info(f"Eircode: {eircode}")
                 logger.info(f"Features: {details}")
@@ -180,9 +194,11 @@ def send_webhook_message(web, properties):
             "color": 0x00ff00,  # Green color
             "image": {"url": property.image_url},  # Main image (larger size)
             "fields": [
-                {"name": "Address", "value": property.address, "inline": True},
-                {"name": "eircode", "value": property.eircode, "inline": True}
-            ]
+                # {"name": "Address", "value": property.address, "inline": True},
+                {"name": "eircode", "value": property.eircode, "inline": True},
+                {"name": "Details", "value": "\n".join(property.details), "inline": True}
+            ],
+            "url": property.link,
         }
         embeds.append(embed)
 
